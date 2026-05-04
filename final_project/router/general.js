@@ -77,7 +77,7 @@ module.exports.general = public_users;
 const axios = require("axios");
 const getBooks = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/');
+    const response = await axios.get('http://localhost:5001/');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -87,7 +87,7 @@ const getBooks = async () => {
 // Task 11
 const getBookByISBN = async (isbn) => {
   try {
-    const response = await axios.get(`http://localhost:5000/isbn/${isbn}`);
+    const response = await axios.get(`http://localhost:5001/isbn/${isbn}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -97,7 +97,7 @@ const getBookByISBN = async (isbn) => {
 // Task 12
 const getBookByAuthor = async (author) => {
   try {
-    const response = await axios.get(`http://localhost:5000/author/${author}`);
+    const response = await axios.get(`http://localhost:5001/author/${author}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -107,7 +107,7 @@ const getBookByAuthor = async (author) => {
 // Task 13
 const getBookByTitle = async (title) => {
   try {
-    const response = await axios.get(`http://localhost:5000/title/${title}`);
+    const response = await axios.get(`http://localhost:5001/title/${title}`);
     return response.data;
   } catch (error) {
     console.error(error);
