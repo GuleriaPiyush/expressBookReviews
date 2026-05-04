@@ -57,10 +57,26 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
         if(review) {
             book["reviews"][reviewer] = review;
         }
-        res.status(200).send(`The review for the book with ISBN ${isbn} has been added/updated.`);
+        res.status(200).json({message: `The review for the book with ISBN ${isbn} has been added/updated.`});
     }
     else{
-        res.status(404).send("Unable to find book!");
+        res.status(404).json({message: "Unable to find book!"});
+    }
+});
+
+regd_users.put("/auth/review", (req, res) => {
+    const isbn = req.query.isbn;
+    let book = books[isbn];
+    if (book) {
+        let review = req.body.review || req.query.review;
+        let reviewer = req.session.authorization['username'];
+        if(review) {
+            book["reviews"][reviewer] = review;
+        }
+        res.status(200).json({message: `The review for the book with ISBN ${isbn} has been added/updated.`});
+    }
+    else{
+        res.status(404).json({message: "Unable to find book!"});
     }
 });
 
@@ -70,10 +86,23 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
     let book = books[isbn];
     if (book) {
         delete book["reviews"][reviewer];
-        res.send(`Reviews for the ISBN ${isbn} posted by the user ${reviewer} deleted.`);
+        res.status(200).json({message: `Reviews for the ISBN ${isbn} posted by the user ${reviewer} deleted.`});
     }
     else{
-        res.send("Unable to find book!");
+        res.status(404).json({message: "Unable to find book!"});
+    }
+});
+
+regd_users.delete("/auth/review", (req, res) => {
+    const isbn = req.query.isbn;
+    let reviewer = req.session.authorization['username'];
+    let book = books[isbn];
+    if (book) {
+        delete book["reviews"][reviewer];
+        res.status(200).json({message: `Reviews for the ISBN ${isbn} posted by the user ${reviewer} deleted.`});
+    }
+    else{
+        res.status(404).json({message: "Unable to find book!"});
     }
 });
 
