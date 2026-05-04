@@ -12,7 +12,7 @@ public_users.post("/register", (req,res) => {
   if (username && password) {
     if (!isValid(username)) { 
       users.push({"username":username,"password":password});
-      return res.status(200).json({message: "User successfully registred. Now you can login"});
+      return res.status(200).json({message: "User successfully registered. Now you can login"});
     } else {
       return res.status(404).json({message: "User already exists!"});    
     }
@@ -43,7 +43,7 @@ public_users.get('/author/:author',function (req, res) {
       }
   }
   if(ans.length == 0){
-      return res.status(300).json({message: "Author not found"});
+      return res.status(404).json({message: "Author not found"});
   }
   res.send(ans);
 });
@@ -60,7 +60,7 @@ public_users.get('/title/:title',function (req, res) {
       }
   }
   if(ans.length == 0){
-      return res.status(300).json({message: "Title not found"});
+      return res.status(404).json({message: "Title not found"});
   }
   res.send(ans);
 });
@@ -80,7 +80,7 @@ const getBooks = async () => {
     const response = await axios.get('http://localhost:5001/');
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching books:", error.message);
   }
 };
 
@@ -90,7 +90,7 @@ const getBookByISBN = async (isbn) => {
     const response = await axios.get(`http://localhost:5001/isbn/${isbn}`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching book with ISBN ${isbn}:`, error.message);
   }
 };
 
@@ -100,7 +100,7 @@ const getBookByAuthor = async (author) => {
     const response = await axios.get(`http://localhost:5001/author/${author}`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching books by author ${author}:`, error.message);
   }
 };
 
@@ -110,6 +110,6 @@ const getBookByTitle = async (title) => {
     const response = await axios.get(`http://localhost:5001/title/${title}`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching books by title ${title}:`, error.message);
   }
 };
